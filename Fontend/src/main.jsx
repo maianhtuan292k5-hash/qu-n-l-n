@@ -1,6 +1,7 @@
 import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import { LanguageProvider } from './contexts/LanguageContext'
 import Router from './router/index.jsx'
 
 class AppErrorBoundary extends React.Component {
@@ -14,6 +15,10 @@ class AppErrorBoundary extends React.Component {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AppErrorBoundary><Router /></AppErrorBoundary>
+    <AppErrorBoundary>
+      <LanguageProvider>
+        <Router />
+      </LanguageProvider>
+    </AppErrorBoundary>
   </StrictMode>,
 )

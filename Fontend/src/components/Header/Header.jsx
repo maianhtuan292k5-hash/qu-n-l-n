@@ -1,14 +1,6 @@
 import { Menu, Search, X } from 'lucide-react'
 import { useState } from 'react'
-
-const navigation = [
-  { label: 'Trang chủ', href: '/' },
-  { label: 'Cơ hội thực tập', href: '/opportunities' },
-  { label: 'Doanh nghiệp', href: '/companies' },
-  { label: 'Thông tin', href: '/information' },
-  { label: 'Hướng dẫn', href: '/guide' },
-  { label: 'Liên hệ', href: '/contact' },
-]
+import { useLanguage } from '../../contexts/LanguageContext'
 
 function BrandMark() {
   return (
@@ -34,7 +26,16 @@ function BrandMark() {
 }
 
 function Header({ activeItem = 'Trang chủ' }) {
+  const { language, setLanguage, t } = useLanguage()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const navigation = [
+    { label: t.nav.home, href: '/' },
+    { label: t.nav.opportunities, href: '/opportunities' },
+    { label: t.nav.companies, href: '/companies' },
+    { label: t.nav.information, href: '/information' },
+    { label: t.nav.guide, href: '/guide' },
+    { label: t.nav.contact, href: '/contact' },
+  ]
 
   return (
     <header className="public-header relative z-20">
@@ -68,10 +69,22 @@ function Header({ activeItem = 'Trang chủ' }) {
         </nav>
 
         <div className="ml-4 hidden items-center gap-2 sm:flex">
+          <label className="flex items-center gap-2 rounded-md border border-[#d8e3f0] bg-white px-2 py-1.5 text-[10px] font-semibold text-[#2b4263]">
+            <span>{t.common.language}</span>
+            <select
+              aria-label={t.common.language}
+              className="bg-transparent font-semibold outline-none"
+              value={language}
+              onChange={(event) => setLanguage(event.target.value)}
+            >
+              <option value="vi">Tiếng Việt</option>
+              <option value="en">English</option>
+            </select>
+          </label>
           <button
             className="grid size-9 place-items-center rounded-md text-[#0757c9] transition-colors hover:bg-[#eff6ff] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0757c9]"
             type="button"
-            aria-label="Tìm kiếm"
+            aria-label={t.common.search}
             onClick={() => { window.location.href = '/opportunities' }}
           >
             <Search size={17} strokeWidth={2.25} />
@@ -80,7 +93,13 @@ function Header({ activeItem = 'Trang chủ' }) {
             className="rounded-[5px] border border-[#0d61da] px-4 py-2 text-[11px] font-semibold text-[#0757c9] transition-colors hover:bg-[#eff6ff]"
             href="/login"
           >
-            Đăng nhập
+            {t.common.login}
+          </a>
+          <a
+            className="rounded-[5px] bg-[#0757c9] px-4 py-2 text-[11px] font-semibold text-white transition-colors hover:bg-[#064aa9]"
+            href="/register"
+          >
+            Đăng ký
           </a>
         </div>
 
@@ -121,6 +140,12 @@ function Header({ activeItem = 'Trang chủ' }) {
                 href="/login"
               >
                 Đăng nhập
+              </a>
+              <a
+                className="rounded-md bg-[#0757c9] px-3 py-2 text-center text-sm font-semibold text-white"
+                href="/register"
+              >
+                Đăng ký
               </a>
             </div>
           </nav>
